@@ -49,12 +49,13 @@ app.post('/', function(req, res) {
 
     transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
+            res.status(500).send('Something broke!');
             return console.log(error);
         }
         console.log('Message sent: ' + info.response);
     });
-    // res.end();
-    res.status(500).send('Something broke!');
+    res.end();
+
 });
 
 
