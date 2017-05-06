@@ -26,40 +26,41 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-// setup e-mail data with unicode symbols
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
-
-// send mail with defined transport object
-
-app.post('/', function (req, res) {
+app.post('/', function(req, res) {
     var email = req.body.email;
     var name = req.body.name;
     var massage = req.body.message;
-    
-    
+
+
     var mailOptions = {
-    to: 'romanlorent.site@gmail.com', // list of receivers
-    subject: 'Massage from the site', // Subject line
-    html: '  <p>Email: ' + email +'</p><br /><p>Name: '+ name +'</p><br /><p>Massage: ' + massage + '</p>'
-};
-    
-    
-    
-    
-    transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-        return console.log(error);
-    }
-    console.log('Message sent: ' + info.response);
-});
-  res.end();
+        to: 'romanlorent.site@gmail.com', // list of receivers
+        subject: 'Massage from the site', // Subject line
+        html: '  <p>Email: ' + email + '</p><br /><p>Name: ' + name + '</p><br /><p>Massage: ' + massage + '</p>'
+    };
+
+
+
+
+    transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: ' + info.response);
+    });
+    res.end();
 });
 
 
 //error middleware
 app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
 });
 
 // launch ======================================================================
