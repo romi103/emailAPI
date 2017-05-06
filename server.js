@@ -53,7 +53,8 @@ app.post('/', function(req, res) {
         }
         console.log('Message sent: ' + info.response);
     });
-    res.end();
+    // res.end();
+    res.status(500).send('Something broke!');
 });
 
 
