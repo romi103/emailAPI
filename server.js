@@ -10,7 +10,7 @@ var user = process.env.USER;
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
-
+console.log("test")
 
 app.use(bodyParser.urlencoded({ extended: true })); // get information from html forms
 app.use(morgan('dev')); // log every request to the console
@@ -26,13 +26,13 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
-app.post('/', function(req, res) {
+app.post('/', function (req, res) {
     var email = req.body.email;
     var name = req.body.name;
     var massage = req.body.message;
@@ -47,7 +47,7 @@ app.post('/', function(req, res) {
 
 
 
-    transporter.sendMail(mailOptions, function(error, info) {
+    transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             res.status(500).send('Something broke!');
             return console.log(error);
@@ -60,7 +60,7 @@ app.post('/', function(req, res) {
 
 
 //error middleware
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
